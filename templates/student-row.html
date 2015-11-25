@@ -4,9 +4,12 @@
   </div>
   <div class="col-xs-3 student-buttons">
     <h4>
-      <a><i class="fa fa-eye fa-2x"></i></a>
-      <a><i class="fa fa-edit fa-2x"></i></a>
+      <a ng-click="StudentCtrl.view(student.index);"><i class="fa fa-eye fa-2x"></i></a>
+      <a ng-click="StudentCtrl.edit(student.index);"><i class="fa fa-edit fa-2x"></i></a>
       <a><i class="fa fa-trash-o fa-2x"></i></a>
     </h4>
   </div>
 </div>
+
+<student-info-modal></student-info-modal>
+<student-edit-modal></student-edit-modal>
