@@ -1,0 +1,12 @@
+<div class="row student-row {{student.school}}" ng-repeat="student in StudentCtrl.students" ng-class="{{student.school}}">
+  <div class="col-xs-9">
+    <h3>{{student.name}}</h3>
+  </div>
+  <div class="col-xs-3 student-buttons">
+    <h4>
+      <a><i class="fa fa-eye fa-2x"></i></a>
+      <a><i class="fa fa-edit fa-2x"></i></a>
+      <a><i class="fa fa-trash-o fa-2x"></i></a>
+    </h4>
+  </div>
+</div>

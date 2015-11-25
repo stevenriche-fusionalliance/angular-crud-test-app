@@ -1,0 +1,59 @@
+.student-row {
+  margin:20px auto;
+  background-color:#31B0D5;
+  border-radius:10px;
+  padding:10px;
+  color:#FFFFFF;
+}
+
+.student-row.Gryffindor {
+  background-color: #AE0001;
+  color: #EEBA30;
+}
+
+.student-row.Gryffindor i {
+  color: #EEBA30;
+}
+
+.student-row.Ravenclaw {
+  background-color: #222F5B;
+  color: #946B2D;
+}
+
+.student-row.Ravenclaw i {
+  color: #946B2D;
+}
+
+.student-row.Hufflepuff {
+  background-color: #ECB939;
+  color: #372E29;
+}
+
+.student-row.Hufflepuff i {
+  color: #372E29;
+}
+
+.student-row.Slytherin {
+  background-color: #2A623D;
+  color: #AAAAAA;
+}
+
+.student-row.Slytherin i {
+  color: #AAAAAA;
+}
+
+.student-buttons {
+  border-left: 1px solid #FFFFFF;
+}
+
+.student-buttons a {
+  cursor: pointer;
+}
+
+.student-buttons a:hover, .student-buttons i:hover {
+  color:#FFFFFF;
+}
+
+i.fa {
+  margin:5px 10px;
+}
