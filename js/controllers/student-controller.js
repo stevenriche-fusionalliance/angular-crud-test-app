@@ -7,7 +7,8 @@
 
     // Function to get all students. Also called when controller initialized
     this.read = function(){
-      $http({method:'GET', url:'data/students.json'})
+      //$http({method:'GET', url:'data/students.json'}) // old call to json file
+      $http({method:'GET', url:'http://localhost:3000/all'})
       .success(function(data){
         that.students = data;
       });
