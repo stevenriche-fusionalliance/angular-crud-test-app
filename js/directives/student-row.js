@@ -4,7 +4,7 @@
     return {
       restrict : 'E',
       templateUrl : '/templates/student-row.html',
-      controller : 'GetController',
+      controller : 'StudentController',
       controllerAs : 'StudentCtrl'
     }
   });
