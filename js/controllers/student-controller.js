@@ -33,8 +33,12 @@
 
     // Function to update a student from the edit form by student id
     this.update = function(student_id){
-      $log.log(that.studentEdit);
-      //$http({method:'PUT', url:'my_edit_url_here', data:dataVar});
+      //$log.log(that.studentEdit);
+      $http({method:'PUT', url:'http://localhost:3000/update/'+student_id, data:that.studentEdit})
+      .success(function(data){
+      //  $log.log(data);
+        that.read();
+      });
       $('#student-edit-modal').modal('hide');
     }
 
@@ -46,8 +50,12 @@
 
     // Function to submit the add student form and add a new student
     this.add = function(){
-      $log.log(that.studentEdit);
-      //$http({method:'POST', url:'my_add_url_here', data:that.studentEdit});
+      //$log.log(that.studentEdit);
+      $http({method:'POST', url:'http://localhost:3000/new', data:that.studentEdit})
+      .success(function(data){
+        $log.log(data);
+        that.read();
+      });
       $('#student-add-modal').modal('hide');
     }
 
@@ -61,8 +69,11 @@
 
     // Function to delete a student by student id. Called by this.delete_confirm
     this.delete = function(student_id){
-      $log.log(student_id);
-      //$http({method:'DELETE', url:'my_delete_url_here', data:student_id});
+      //$log.log(student_id);
+      $http({method:'DELETE', url:'http://localhost:3000/delete/'+student_id})
+      .success(function(data){
+        that.read();
+      });
     }
 
     // Get all students

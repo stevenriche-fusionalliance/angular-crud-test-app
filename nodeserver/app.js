@@ -1,5 +1,11 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+//var parseUrlencoded = bodyParser.urlencoded({extended: false});
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 app.get('/', function(request, response){
   response.send('It works!');
@@ -12,9 +18,83 @@ app.get('/all', function(request, response){
   response.end();
 });
 
+app.put('/update/:student_id', function(request, response){
+  response.append('Access-Control-Allow-Origin', '*');
+  student_number = find_student(request.params.student_id);
+
+  if (student_number !== false){
+    students[student_number].name = request.body.name;
+    students[student_number].school = request.body.school;
+    students[student_number].grade = request.body.grade;
+    students[student_number].description = request.body.description;
+    response.json(request.body);
+  } else {
+    response.status(404).json('No student found');
+  }
+  response.end();
+});
+
+app.post('/new', function(request, response){
+  response.append('Access-Control-Allow-Origin', '*');
+  students.push({
+    index: students.reverse()[0].index + 1,
+    name: request.body.name,
+    school: request.body.school,
+    grade: request.body.grade,
+    description: request.body.description
+  });
+  students.sort(function(a,b) {return (a.index == b.index) ? 0 : (a.index > b.index);} );
+  response.status(201).json(request.body);
+  response.end();
+});
+
+app.delete('/delete/:student_id', function(request, response){
+  response.append('Access-Control-Allow-Origin', '*');
+  student_number = find_student(request.params.student_id);
+
+  if (student_number !== false){
+    students.splice(student_number, 1);
+    response.sendStatus(200);
+  } else {
+    response.status(400).json('No student found');
+  }
+  response.end();
+});
+
+app.options('/update/:student_id', function(request, response){
+  response.append('Access-Control-Allow-Origin', '*');
+  response.append('Access-Control-Allow-Methods', 'PUT');
+  response.append('Access-Control-Allow-Headers', 'content-type');
+  response.end();
+});
+
+app.options('/new', function(request, response){
+  response.append('Access-Control-Allow-Origin', '*');
+  response.append('Access-Control-Allow-Methods', 'POST');
+  response.append('Access-Control-Allow-Headers', 'content-type');
+  response.end();
+});
+
+app.options('/delete/:student_id', function(request, response){
+  response.append('Access-Control-Allow-Origin', '*');
+  response.append('Access-Control-Allow-Methods', 'DELETE');
+  response.append('Access-Control-Allow-Headers', 'content-type');
+  response.end();
+});
+
 app.listen(3000, function(){
   console.log('App started...');
 });
+
+function find_student(student_index){
+  for (var iii = 0; iii < students.length; iii++){
+    if (students[iii].index === +student_index){
+      return iii;
+    }
+  }
+
+  return false;
+}
 
 var students = [
   {
