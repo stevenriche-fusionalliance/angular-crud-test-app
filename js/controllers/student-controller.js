@@ -1,23 +1,33 @@
 (function(){
   angular.module('CrudTest')
-  .controller('StudentController', ['$http', '$filter', '$log', function($http, $filter, $log){
+  .controller('StudentController', ['$http', '$filter', '$log', StudentController]);
+
+  function StudentController($http, $filter, $log){
     var that = this;
     this.currentStudent = 1;
     this.studentInfo = {};
+    // initialize students
+    read_function();
 
     // Function to get all students. Also called when controller initialized
     this.read = function(){
-      //$http({method:'GET', url:'data/students.json'}) // old call to json file
-      $http({method:'GET', url:'http://localhost:3000/all'})
-      .success(function(data){
-        that.students = data;
-      });
+      read_function();
     }
 
     // Function to view one student by student id
     this.view = function(student_id){
       that.currentStudent = student_id;
-      that.studentInfo = $filter('filter')(that.students, {"index":student_id});
+      var studentInfo = $filter('filter')(that.students, {"index":student_id});
+      if (studentInfo.length > 0){
+        that.studentInfo = studentInfo[0];
+      } else {
+        that.studentInfo = {
+          name: '',
+          school: '',
+          grade: 0,
+          description: ''
+        };
+      }
       //$log.log(that.studentInfo);
       $('#student-info-modal').modal();
     }
@@ -25,8 +35,18 @@
     // Function to open edit form for one student by student id
     this.edit = function(student_id){
       that.currentStudent = student_id;
-      that.studentInfo = $filter('filter')(that.students, {"index":student_id});
-      that.studentEdit = that.studentInfo[0];
+      var studentInfo = $filter('filter')(that.students, {"index":student_id});
+      if (studentInfo.length > 0){
+        that.studentEdit = studentInfo[0];
+      } else {
+        that.studentEdit = {
+          name: '',
+          school: '',
+          grade: 0,
+          description: ''
+        };
+      }
+
       //$log.log(that.studentInfo);
       $('#student-edit-modal').modal();
     }
@@ -40,6 +60,7 @@
         that.read();
       });
       $('#student-edit-modal').modal('hide');
+      $('.edit_message').hide();
     }
 
     // Function to open the add student form
@@ -76,7 +97,14 @@
       });
     }
 
-    // Get all students
-    that.read();
-  }]);
+    function read_function(){
+      //$http({method:'GET', url:'data/students.json'}) // old call to json file
+      $http({method:'GET', url:'http://localhost:3000/all'})
+      .success(function(data){
+        that.students = data;
+      });
+    }
+
+  }
+
 })();
